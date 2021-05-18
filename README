@@ -1,0 +1,77 @@
+********************
+FTP MODULE
+********************
+dependencies: cx_oracle
+classname: FTPsession
+object attributes: host, username, password
+methods:
+    - uplaod(filename, remote_path, local_path)
+        uploading 'filename' from 'local_path' to 'remotepath'
+    - download(remote_path, local_path, filename, regex)
+        downloading 'filename' from 'remotepath' to 'local_path'. you can use 'regex' instead of filename.
+        all matching files will be downloaded
+    - get_files(path="/", regex):
+        returns list of files in 'path' directory. default value for path is '/'.
+        if you pass value for 'regex' just matching files will be returned. regex is not mandatory.
+    - close()
+        closing connection.
+
+
+********************
+DB MODULE
+********************
+dependencies: cx_oracle
+classname: DbSession
+object attributes: host, username, password, port='****', service='****'
+methods:
+
+    - close
+        closing connection.
+    - launch_query(query)
+        gets query string. runs the query and returns the fetched data.
+    - export_from_query(query,export_name):
+        gets query string. runs the query and create file called 'export_name' containing the fetched data.
+    - df_from_query(query)
+        gets query string. runs the query and returns the fetched data as dataframe
+
+
+********************
+CSV MODULE
+********************
+dependencies : pandas, numpy
+classname: CSVFile
+object attributes: filename, path
+methods:
+    - export(query,export_name)
+        gets query string. runs the query and create file called 'export_name' containing the fetched data.
+    - replace_csvfile(file, column, update_from, update_to)
+        gets the csv file, checks the values in <column>, updates the values from <update_from> to <update_to>
+    - filter_csvfile(file, column,  exclude_values=[], include_values=[]):
+        gets the csv file, filters the <column>. you can use exclue or include for values.
+    - pvot_csvfile (file, column)
+        gets the file and creates a pvote tale on <column>, the result is returned as dataframe.
+    - vlookup_csvfile(file, column, lookup_file, lookup_column, table_array)
+        gets the csv file, and looksup in the first file and <column> and then lookup_file and lookup_column and adds the table_array value to the file.
+
+
+********************
+smtp MODULE
+********************
+dependencies : smtplib
+methods:
+    - send_email(server, email, password, to, cc, subject, body, attachement)
+        gets the mentioned inputes and sends the email.
+
+
+********************
+excel MODULE
+********************
+dependencies : pandas, openxyl
+classname: File
+object attributes: dataframe, filename,  sheetname='sheet1'
+methods:
+    - save:
+        saves the file containg dataframe and named <filename>
+    -  append_sheet(df, file_name, sheetname)
+        opens excelfile called <filename>, adds a sheet called <sheetname> containing df.
+
